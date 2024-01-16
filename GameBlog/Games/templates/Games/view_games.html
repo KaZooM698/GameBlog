@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+       <div class="card mb-3">
+        {{ forloop.counter }}
+        <div class="card-header">
+            Жанр: <a href="{{ games_item.category.get_absolute_url }}">{{ games_item.category }}</a>
+        </div>
+<!--        <div class="media" style="display:flex">-->
+            <div class="card-body">
+                {% if games_item.photo %}
+                <img src="{{ games_item.photo.url }}" class="mr-3" width="350" alt="Photo">
+                {% else %}
+                <h6>Нет фото</h6>
+                {% endif %}
+            </div>
+<!--            <div class="media-body">-->
+                <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}">{{ games_item.title }}</h5>
+                {% autoescape off %}
+                <p class="card-text">{{ games_item.content|linebreaks }}</p>
+                {% endautoescape %}
+<!--                <a href="{{ games_item.get_absolute_url }}" class="btn btn-primary">Подробнее...</a>-->
+<!--            </div>-->
+            <div class="card-footer text-muted">
+
+                {{ games_item.created_at|date:'Y-m-d H:i' }}
+            </div>
+<!--        </div>-->
+    </div>
+    <div class="card-body">
+
+    </div>
+
+
+
+{% endblock %}

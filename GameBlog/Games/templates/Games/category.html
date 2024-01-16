@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{ category.title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+<!--<div class="list-group">-->
+<!--    {% for cat in categories %}-->
+<!--    <a href="{% url 'Category' cat.pk %}" class="list-group-item list-group-item-action">{{ cat.title }}</a>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+{% endblock %}
+
+{% block content %}
+
+    {% for item in games %}
+    <div class="card mb-3">
+        {{ forloop.counter }}
+        <div class="card-header">
+            Жанр: {{ item.category }}
+        </div>
+        <div class="media" style="display:flex">
+            <div class="media-photo">
+                {% if item.photo %}
+                <img src="{{ item.photo.url }}" class="mr-3" width="350" alt="Photo">
+                {% else %}
+                <h6>Нет фото</h6>
+                {% endif %}
+            </div>
+            <div class="media-body">
+                <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}">{{ item.title }}</h5>
+                {% autoescape off %}
+                <p class="card-text">{{ item.content|truncatewords:60|linebreaks }}</p>
+                {% endautoescape %}
+                <a href="#" class="btn btn-primary">Подробнее...</a>
+            </div>
+            <div class="card-footer text-muted">
+
+                      {{ item.created_at|date:'Y-m-d H:i' }}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+    </div>
+    {% endfor %}
+
+{% endblock %}
